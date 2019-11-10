@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    
+<!--t_role 映射文件 vision:1.0.0 -->
+<mapper namespace="com.master.business.domain.iface.user.IRoleDao">
+	
+	<sql id="column"> roleid,rolename </sql>
+	
+	<sql id="key_where"> where roleid=#{roleid} </sql>
+
+	<!-- 查询 -->
+	<select id="get" resultType="com.master.business.domain.model.user.Role" parameterType="java.lang.String">
+		select <include refid="column"/> from t_role <include refid="key_where" />
+	</select>
+	
+	<select id="find" resultType="com.master.business.domain.model.user.Role" parameterType="com.master.business.domain.model.user.Role">
+		select <include refid="column"/> from t_role 
+		<where>
+			<if test="roleid != null &amp;&amp; roleid != ''"> and roleid=#{roleid}</if>
+			<if test="rolename != null &amp;&amp; rolename != ''"> and rolename=#{rolename}</if>
+		</where>
+	</select>
+	
+	<select id="findByPage" resultType="com.master.business.domain.model.user.Role" parameterType="QueryBean">
+		select <include refid="column"/> from t_role
+		<where>
+			<if test="param.roleid != null &amp;&amp; param.roleid != ''"> and roleid=#{param.roleid}</if>
+			<if test="param.rolename != null &amp;&amp; param.rolename != ''"> and rolename=#{param.rolename}</if>
+		</where>
+		<if test="page.orderKey != null &amp;&amp; page.orderKey != ''"> order by ${page.orderKey}</if>
+		<if test="page.ascend != null &amp;&amp; page.ascend != ''"> ${page.ascend}</if>
+	</select>
+	
+	<!-- 插入 -->
+	<insert id="insert" parameterType="com.master.business.domain.model.user.Role">
+		insert into t_role (
+		<trim suffixOverrides=",">
+			<if test="roleid != null &amp;&amp; roleid != ''">roleid,</if>
+			<if test="rolename != null &amp;&amp; rolename != ''">rolename,</if>
+		</trim>
+		) values (
+		<trim suffixOverrides=",">
+			<if test="roleid != null &amp;&amp; roleid != ''">#{roleid},</if>
+			<if test="rolename != null &amp;&amp; rolename != ''">#{rolename},</if>
+		</trim>
+		)
+	</insert>
+	
+	<!-- 更新 -->
+	<update id="update" parameterType="com.master.business.domain.model.user.Role">
+		update t_role 
+		<trim prefix=" set " suffixOverrides=",">
+			<if test="roleid != null &amp;&amp; roleid != ''">roleid=#{roleid},</if>
+			<if test="rolename != null &amp;&amp; rolename != ''">rolename=#{rolename},</if>
+		</trim>
+		<include refid="key_where" />
+	</update>
+	
+	<!-- 删除 -->
+	<delete id="delete" parameterType="com.master.business.domain.model.user.Role">
+		delete from t_role <include refid="key_where"/>
+	</delete>
+	
+	<!-- 自定义操作 -->
+
+	<select id="selectRole"  resultType="com.master.business.domain.model.user.Role" parameterType="java.lang.String">
+		select
+			r.rolename,r.roleid
+		from
+			t_role r
+		LEFT JOIN
+			t_user_role ur on r.roleid=ur.roleid
+		where
+			ur.userid=#{userid}
+	</select>
+
+
+</mapper>

@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    
+<!--t_user 映射文件 vision:1.0.0 -->
+<mapper namespace="com.master.business.domain.iface.user.IUserDao">
+	
+	<sql id="column"> fullname,password,salt,userid,username </sql>
+	
+	<sql id="key_where"> where userid=#{userid} </sql>
+
+	<!-- 查询 -->
+	<select id="get" resultType="com.master.business.domain.model.user.User" parameterType="java.lang.String">
+		select <include refid="column"/> from t_user <include refid="key_where" />
+	</select>
+	
+	<select id="find" resultType="com.master.business.domain.model.user.User" parameterType="com.master.business.domain.model.user.User">
+		select <include refid="column"/> from t_user 
+		<where>
+			<if test="fullname != null &amp;&amp; fullname != ''"> and fullname=#{fullname}</if>
+			<if test="password != null &amp;&amp; password != ''"> and password=#{password}</if>
+			<if test="salt != null &amp;&amp; salt != ''"> and salt=#{salt}</if>
+			<if test="userid != null &amp;&amp; userid != ''"> and userid=#{userid}</if>
+			<if test="username != null &amp;&amp; username != ''"> and username=#{username}</if>
+		</where>
+	</select>
+	
+	<select id="findByPage" resultType="com.master.business.domain.model.user.User" parameterType="QueryBean">
+		select <include refid="column"/> from t_user
+		<where>
+			<if test="param.fullname != null &amp;&amp; param.fullname != ''"> and fullname=#{param.fullname}</if>
+			<if test="param.password != null &amp;&amp; param.password != ''"> and password=#{param.password}</if>
+			<if test="param.salt != null &amp;&amp; param.salt != ''"> and salt=#{param.salt}</if>
+			<if test="param.userid != null &amp;&amp; param.userid != ''"> and userid=#{param.userid}</if>
+			<if test="param.username != null &amp;&amp; param.username != ''"> and username=#{param.username}</if>
+		</where>
+		<if test="page.orderKey != null &amp;&amp; page.orderKey != ''"> order by ${page.orderKey}</if>
+		<if test="page.ascend != null &amp;&amp; page.ascend != ''"> ${page.ascend}</if>
+	</select>
+	
+	<!-- 插入 -->
+	<insert id="insert" parameterType="com.master.business.domain.model.user.User">
+		insert into t_user (
+		<trim suffixOverrides=",">
+			<if test="fullname != null &amp;&amp; fullname != ''">fullname,</if>
+			<if test="password != null &amp;&amp; password != ''">password,</if>
+			<if test="salt != null &amp;&amp; salt != ''">salt,</if>
+			<if test="userid != null &amp;&amp; userid != ''">userid,</if>
+			<if test="username != null &amp;&amp; username != ''">username,</if>
+		</trim>
+		) values (
+		<trim suffixOverrides=",">
+			<if test="fullname != null &amp;&amp; fullname != ''">#{fullname},</if>
+			<if test="password != null &amp;&amp; password != ''">#{password},</if>
+			<if test="salt != null &amp;&amp; salt != ''">#{salt},</if>
+			<if test="userid != null &amp;&amp; userid != ''">#{userid},</if>
+			<if test="username != null &amp;&amp; username != ''">#{username},</if>
+		</trim>
+		)
+	</insert>
+	
+	<!-- 更新 -->
+	<update id="update" parameterType="com.master.business.domain.model.user.User">
+		update t_user 
+		<trim prefix=" set " suffixOverrides=",">
+			<if test="fullname != null &amp;&amp; fullname != ''">fullname=#{fullname},</if>
+			<if test="password != null &amp;&amp; password != ''">password=#{password},</if>
+			<if test="salt != null &amp;&amp; salt != ''">salt=#{salt},</if>
+			<if test="userid != null &amp;&amp; userid != ''">userid=#{userid},</if>
+			<if test="username != null &amp;&amp; username != ''">username=#{username},</if>
+		</trim>
+		<include refid="key_where" />
+	</update>
+	
+	<!-- 删除 -->
+	<delete id="delete" parameterType="com.master.business.domain.model.user.User">
+		delete from t_user <include refid="key_where"/>
+	</delete>
+	
+	<!-- 自定义操作 -->
+	
+</mapper>

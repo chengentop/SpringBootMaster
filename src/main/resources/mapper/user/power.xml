@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!--t_power 映射文件 vision:1.0.0 -->
+<mapper namespace="com.master.business.domain.iface.user.IPowerDao">
+
+    <sql id="column"> intime,menucode,menuname,permissioncode,permissionname,powerid,requiredpermission </sql>
+
+    <sql id="key_where"> where powerid=#{powerid} </sql>
+
+    <!-- 查询 -->
+    <select id="get" resultType="com.master.business.domain.model.user.Power" parameterType="java.lang.String">
+        select
+        <include refid="column"/>
+        from t_power
+        <include refid="key_where"/>
+    </select>
+
+    <select id="find" resultType="com.master.business.domain.model.user.Power"
+            parameterType="com.master.business.domain.model.user.Power">
+        select
+        <include refid="column"/>
+        from t_power
+        <where>
+            <if test="intime != null">and intime=#{intime}</if>
+            <if test="menucode != null &amp;&amp; menucode != ''">and menucode=#{menucode}</if>
+            <if test="menuname != null &amp;&amp; menuname != ''">and menuname=#{menuname}</if>
+            <if test="permissioncode != null &amp;&amp; permissioncode != ''">and permissioncode=#{permissioncode}</if>
+            <if test="permissionname != null &amp;&amp; permissionname != ''">and permissionname=#{permissionname}</if>
+            <if test="powerid != null &amp;&amp; powerid != ''">and powerid=#{powerid}</if>
+            <if test="requiredpermission != null">and requiredpermission=#{requiredpermission}</if>
+        </where>
+    </select>
+
+    <select id="findByPage" resultType="com.master.business.domain.model.user.Power" parameterType="QueryBean">
+        select
+        <include refid="column"/>
+        from t_power
+        <where>
+            <if test="param.intime != null">and intime=#{param.intime}</if>
+            <if test="param.menucode != null &amp;&amp; param.menucode != ''">and menucode=#{param.menucode}</if>
+            <if test="param.menuname != null &amp;&amp; param.menuname != ''">and menuname=#{param.menuname}</if>
+            <if test="param.permissioncode != null &amp;&amp; param.permissioncode != ''">and
+                permissioncode=#{param.permissioncode}
+            </if>
+            <if test="param.permissionname != null &amp;&amp; param.permissionname != ''">and
+                permissionname=#{param.permissionname}
+            </if>
+            <if test="param.powerid != null &amp;&amp; param.powerid != ''">and powerid=#{param.powerid}</if>
+            <if test="param.requiredpermission != null">and requiredpermission=#{param.requiredpermission}</if>
+        </where>
+        <if test="page.orderKey != null &amp;&amp; page.orderKey != ''">order by ${page.orderKey}</if>
+        <if test="page.ascend != null &amp;&amp; page.ascend != ''">${page.ascend}</if>
+    </select>
+
+    <!-- 插入 -->
+    <insert id="insert" parameterType="com.master.business.domain.model.user.Power">
+        insert into t_power (
+        <trim suffixOverrides=",">
+            <if test="intime != null">intime,</if>
+            <if test="menucode != null &amp;&amp; menucode != ''">menucode,</if>
+            <if test="menuname != null &amp;&amp; menuname != ''">menuname,</if>
+            <if test="permissioncode != null &amp;&amp; permissioncode != ''">permissioncode,</if>
+            <if test="permissionname != null &amp;&amp; permissionname != ''">permissionname,</if>
+            <if test="powerid != null &amp;&amp; powerid != ''">powerid,</if>
+            <if test="requiredpermission != null">requiredpermission,</if>
+        </trim>
+        ) values (
+        <trim suffixOverrides=",">
+            <if test="intime != null">#{intime},</if>
+            <if test="menucode != null &amp;&amp; menucode != ''">#{menucode},</if>
+            <if test="menuname != null &amp;&amp; menuname != ''">#{menuname},</if>
+            <if test="permissioncode != null &amp;&amp; permissioncode != ''">#{permissioncode},</if>
+            <if test="permissionname != null &amp;&amp; permissionname != ''">#{permissionname},</if>
+            <if test="powerid != null &amp;&amp; powerid != ''">#{powerid},</if>
+            <if test="requiredpermission != null">#{requiredpermission},</if>
+        </trim>
+        )
+    </insert>
+
+    <!-- 更新 -->
+    <update id="update" parameterType="com.master.business.domain.model.user.Power">
+        update t_power
+        <trim prefix=" set " suffixOverrides=",">
+            <if test="intime != null">intime=#{intime},</if>
+            <if test="menucode != null &amp;&amp; menucode != ''">menucode=#{menucode},</if>
+            <if test="menuname != null &amp;&amp; menuname != ''">menuname=#{menuname},</if>
+            <if test="permissioncode != null &amp;&amp; permissioncode != ''">permissioncode=#{permissioncode},</if>
+            <if test="permissionname != null &amp;&amp; permissionname != ''">permissionname=#{permissionname},</if>
+            <if test="powerid != null &amp;&amp; powerid != ''">powerid=#{powerid},</if>
+            <if test="requiredpermission != null">requiredpermission=#{requiredpermission},</if>
+        </trim>
+        <include refid="key_where"/>
+    </update>
+
+    <!-- 删除 -->
+    <delete id="delete" parameterType="com.master.business.domain.model.user.Power">
+        delete from t_power
+        <include refid="key_where"/>
+    </delete>
+
+    <!-- 自定义操作 -->
+
+    <select id="selectPower" resultType="com.master.business.domain.model.user.Power" parameterType="java.lang.String">
+        select
+	        p.permissioncode
+        from
+            t_role_power rp LEFT JOIN t_power p on rp.powerid=p.powerid
+        where
+            rp.roleid=#{roleid} and state='1'
+	</select>
+
+</mapper>
