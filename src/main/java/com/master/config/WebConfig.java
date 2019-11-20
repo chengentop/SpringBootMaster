@@ -47,11 +47,6 @@ public class WebConfig implements WebMvcConfigurer{
 		registry.addMapping("/**");
 	}
 
-/*	@Override
-	public void addViewControllers(ViewControllerRegistry registry) {
-		registry.addRedirectViewController("/", "/auth/login");
-		super.addViewControllers(registry);
-	}*/
 
 	@Override
 	public void addArgumentResolvers(List<HandlerMethodArgumentResolver> argumentResolvers) {
@@ -88,12 +83,12 @@ public class WebConfig implements WebMvcConfigurer{
 		List<ViewResolver> viewResolvers = new LinkedList<>();
 
 		viewResolvers.add(new JsonViewResolver());
-		InternalResourceViewResolver jspViewResolver = new InternalResourceViewResolver();
-		jspViewResolver.setViewClass(JstlView.class);
-		jspViewResolver.setPrefix("/WEB-INF/view/");
-		jspViewResolver.setSuffix(".jsp");
-		jspViewResolver.setOrder(2);
-		viewResolvers.add(jspViewResolver);
+//		InternalResourceViewResolver jspViewResolver = new InternalResourceViewResolver();
+//		jspViewResolver.setViewClass(JstlView.class);
+//		jspViewResolver.setPrefix("/WEB-INF/view/");
+//		jspViewResolver.setSuffix(".jsp");
+//		jspViewResolver.setOrder(2);
+//		viewResolvers.add(jspViewResolver);
 
 		ContentNegotiatingViewResolver resolver = new ContentNegotiatingViewResolver();
 		resolver.setViewResolvers(viewResolvers);
