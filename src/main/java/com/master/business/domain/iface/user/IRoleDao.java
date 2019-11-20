@@ -31,4 +31,6 @@ public interface IRoleDao extends IBaseDao<Role>{
 	 * @throws DataAccessException
 	 */
 	public List<Role> selectRole(String userid) throws DataAccessException;
+
+	public Role getRole(String userid)throws DataAccessException;
 }

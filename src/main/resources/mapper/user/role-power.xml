@@ -1,87 +1,97 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  
-    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-    
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
 <!--t_role_power 映射文件 vision:1.0.0 -->
 <mapper namespace="com.master.business.domain.iface.user.IRolePowerDao">
-	
-	<sql id="column"> id,modtime,poweridid,roleid,state,intime </sql>
-	
-	<sql id="key_where"> where id=#{id} </sql>
 
-	<!-- 查询 -->
-	<select id="get" resultType="com.master.business.domain.model.user.RolePower" parameterType="java.lang.String">
-		select <include refid="column"/> from t_role_power <include refid="key_where" />
-	</select>
-	
-	<select id="find" resultType="com.master.business.domain.model.user.RolePower" parameterType="com.master.business.domain.model.user.RolePower">
-		select <include refid="column"/> from t_role_power 
-		<where>
-			<if test="id != null &amp;&amp; id != ''"> and id=#{id}</if>
-			<if test="intime != null"> and intime=#{intime}</if>
-			<if test="modtime != null"> and modtime=#{modtime}</if>
-			<if test="powerid != null &amp;&amp; powerid != ''"> and powerid=#{powerid}</if>
-			<if test="roleid != null &amp;&amp; roleid != ''"> and roleid=#{roleid}</if>
-			<if test="state != null"> and state=#{state}</if>
-		</where>
-	</select>
-	
-	<select id="findByPage" resultType="com.master.business.domain.model.user.RolePower" parameterType="QueryBean">
-		select <include refid="column"/> from t_role_power
-		<where>
-			<if test="param.id != null &amp;&amp; param.id != ''"> and id=#{param.id}</if>
-			<if test="param.intime != null"> and intime=#{param.intime}</if>
-			<if test="param.modtime != null"> and modtime=#{param.modtime}</if>
-			<if test="param.powerid != null &amp;&amp; param.powerid != ''"> and powerid=#{param.powerid}</if>
-			<if test="param.roleid != null &amp;&amp; param.roleid != ''"> and roleid=#{param.roleid}</if>
-			<if test="param.state != null"> and state=#{param.state}</if>
-		</where>
-		<if test="page.orderKey != null &amp;&amp; page.orderKey != ''"> order by ${page.orderKey}</if>
-		<if test="page.ascend != null &amp;&amp; page.ascend != ''"> ${page.ascend}</if>
-	</select>
-	
-	<!-- 插入 -->
-	<insert id="insert" parameterType="com.master.business.domain.model.user.RolePower">
-		insert into t_role_power (
-		<trim suffixOverrides=",">
-			<if test="id != null &amp;&amp; id != ''">id,</if>
-			<if test="intime != null">intime,</if>
-			<if test="modtime != null">modtime,</if>
-			<if test="powerid != null &amp;&amp; powerid != ''">powerid,</if>
-			<if test="roleid != null &amp;&amp; roleid != ''">roleid,</if>
-			<if test="state != null">state,</if>
-		</trim>
-		) values (
-		<trim suffixOverrides=",">
-			<if test="id != null &amp;&amp; id != ''">#{id},</if>
-			<if test="intime != null">#{intime},</if>
-			<if test="modtime != null">#{modtime},</if>
-			<if test="powerid != null &amp;&amp; powerid != ''">#{powerid},</if>
-			<if test="roleid != null &amp;&amp; roleid != ''">#{roleid},</if>
-			<if test="state != null">#{state},</if>
-		</trim>
-		)
-	</insert>
-	
-	<!-- 更新 -->
-	<update id="update" parameterType="com.master.business.domain.model.user.RolePower">
-		update t_role_power 
-		<trim prefix=" set " suffixOverrides=",">
-			<if test="id != null &amp;&amp; id != ''">id=#{id},</if>
-			<if test="intime != null">intime=#{intime},</if>
-			<if test="modtime != null">modtime=#{modtime},</if>
-			<if test="powerid != null &amp;&amp; powerid != ''">powerid=#{powerid},</if>
-			<if test="roleid != null &amp;&amp; roleid != ''">roleid=#{roleid},</if>
-			<if test="state != null">state=#{state},</if>
-		</trim>
-		<include refid="key_where" />
-	</update>
-	
-	<!-- 删除 -->
-	<delete id="delete" parameterType="com.master.business.domain.model.user.RolePower">
-		delete from t_role_power <include refid="key_where"/>
-	</delete>
-	
-	<!-- 自定义操作 -->
-	
+    <sql id="column"> id,modtime,poweridid,roleid,state,intime </sql>
+
+    <sql id="key_where"> where id=#{id} </sql>
+
+    <!-- 查询 -->
+    <select id="get" resultType="com.master.business.domain.model.user.RolePower" parameterType="java.lang.String">
+        select
+        <include refid="column"/>
+        from t_role_power
+        <include refid="key_where"/>
+    </select>
+
+    <select id="find" resultType="com.master.business.domain.model.user.RolePower"
+            parameterType="com.master.business.domain.model.user.RolePower">
+        select
+        <include refid="column"/>
+        from t_role_power
+        <where>
+            <if test="id != null &amp;&amp; id != ''">and id=#{id}</if>
+            <if test="intime != null">and intime=#{intime}</if>
+            <if test="modtime != null">and modtime=#{modtime}</if>
+            <if test="powerid != null &amp;&amp; powerid != ''">and powerid=#{powerid}</if>
+            <if test="roleid != null &amp;&amp; roleid != ''">and roleid=#{roleid}</if>
+            <if test="state != null">and state=#{state}</if>
+        </where>
+    </select>
+
+    <select id="findByPage" resultType="com.master.business.domain.model.user.RolePower" parameterType="QueryBean">
+        select
+        <include refid="column"/>
+        from t_role_power
+        <where>
+            <if test="param.id != null &amp;&amp; param.id != ''">and id=#{param.id}</if>
+            <if test="param.intime != null">and intime=#{param.intime}</if>
+            <if test="param.modtime != null">and modtime=#{param.modtime}</if>
+            <if test="param.powerid != null &amp;&amp; param.powerid != ''">and powerid=#{param.powerid}</if>
+            <if test="param.roleid != null &amp;&amp; param.roleid != ''">and roleid=#{param.roleid}</if>
+            <if test="param.state != null">and state=#{param.state}</if>
+        </where>
+        <if test="page.orderKey != null &amp;&amp; page.orderKey != ''">order by ${page.orderKey}</if>
+        <if test="page.ascend != null &amp;&amp; page.ascend != ''">${page.ascend}</if>
+    </select>
+
+    <!-- 插入 -->
+    <insert id="insert" parameterType="com.master.business.domain.model.user.RolePower">
+        insert into t_role_power (
+        <trim suffixOverrides=",">
+            <if test="id != null &amp;&amp; id != ''">id,</if>
+            <if test="intime != null">intime,</if>
+            <if test="modtime != null">modtime,</if>
+            <if test="powerid != null &amp;&amp; powerid != ''">powerid,</if>
+            <if test="roleid != null &amp;&amp; roleid != ''">roleid,</if>
+            <if test="state != null">state,</if>
+        </trim>
+        ) values (
+        <trim suffixOverrides=",">
+            <if test="id != null &amp;&amp; id != ''">#{id},</if>
+            <if test="intime != null">#{intime},</if>
+            <if test="modtime != null">#{modtime},</if>
+            <if test="powerid != null &amp;&amp; powerid != ''">#{powerid},</if>
+            <if test="roleid != null &amp;&amp; roleid != ''">#{roleid},</if>
+            <if test="state != null">#{state},</if>
+        </trim>
+        )
+    </insert>
+
+    <!-- 更新 -->
+    <update id="update" parameterType="com.master.business.domain.model.user.RolePower">
+        update t_role_power
+        <trim prefix=" set " suffixOverrides=",">
+            <if test="id != null &amp;&amp; id != ''">id=#{id},</if>
+            <if test="intime != null">intime=#{intime},</if>
+            <if test="modtime != null">modtime=#{modtime},</if>
+            <if test="powerid != null &amp;&amp; powerid != ''">powerid=#{powerid},</if>
+            <if test="roleid != null &amp;&amp; roleid != ''">roleid=#{roleid},</if>
+            <if test="state != null">state=#{state},</if>
+        </trim>
+        <include refid="key_where"/>
+    </update>
+
+    <!-- 删除 -->
+    <delete id="delete" parameterType="com.master.business.domain.model.user.RolePower">
+        delete from t_role_power
+        <include refid="key_where"/>
+    </delete>
+
+    <!-- 自定义操作 -->
+
+
 </mapper>

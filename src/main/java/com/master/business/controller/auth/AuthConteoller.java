@@ -2,12 +2,14 @@ package com.master.business.controller.auth;
 
 import com.master.business.domain.model.user.User;
 import com.master.business.service.user.IUserService;
+import com.master.core.framework.web.AuthUser;
 import com.master.core.framework.web.BaseController;
 import com.master.core.framework.web.ResultData;
 import com.master.core.util.MD5Util;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
+import org.apache.shiro.web.session.HttpServletSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +17,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+
+import javax.servlet.http.HttpSession;
 
 
 /**
@@ -32,7 +36,7 @@ public class AuthConteoller extends BaseController {
     private IUserService userService;
 
     @RequestMapping(value = "/login", method = {RequestMethod.POST})
-    public void login(String username, String password, Model model) {
+    public void login(String username, String password, HttpSession session, Model model) {
         ResultData data = ResultData.init();
         //对密码进行加密
         password = MD5Util.MD5Pwd(username, password);
@@ -44,11 +48,27 @@ public class AuthConteoller extends BaseController {
             subject.login(usernamePasswordToken);
             User user = (User) subject.getPrincipal();
             data.setData("登录成功", user);
-            model.addAttribute("user", user);
+            AuthUser authuser = new AuthUser();
+            authuser.setUserid(user.getUserid());
+            authuser.setNickname(user.getUsername());
+            authuser.setUsername(user.getUsername());
+            session.setAttribute("authuser", authuser);
+            session.setMaxInactiveInterval(1800);
             collect(data, model);
         } catch (Exception e) {
             collect(e, model);
         }
+    }
 
+    @RequestMapping(value = "/logout", method = RequestMethod.POST)
+    public void login_out(HttpSession session, Model model) {
+        ResultData data = ResultData.init();
+        try {
+            session.removeAttribute("authuser");
+            session.invalidate();
+            collect(data, model);
+        } catch (Exception e) {
+            collect(e, model);
+        }
     }
 }

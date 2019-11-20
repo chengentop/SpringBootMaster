@@ -11,15 +11,16 @@ import java.sql.Timestamp;
   */
 public class Power implements Serializable{
 	private static final long serialVersionUID = 1L;    
-	public static final String POWERID="powerid";  //创建时间
-	
-	private Timestamp intime;  //创建时间
-	private String menucode;  //归属菜单,前端判断并展示菜单使用
-	private String menuname;  //菜单的中文释义
+	public static final String POWERID="powerid";  //权限id
+
+	private String powerid;  //权限id
 	private String permissioncode;  //权限的代码/通配符,对应代码中@RequiresPermissions 的value
 	private String permissionname;  //本权限的中文释义
-	private String powerid;  //权限id
 	private int requiredpermission;  //是否本菜单必选权限, 1.必选 2非必选 通常是"列表"权限是必选
+	private String menucode;  //归属菜单,前端判断并展示菜单使用
+	private String menuname;  //菜单的中文释义
+	private Timestamp intime;  //创建时间
+
 	
 	public Timestamp getIntime(){
 		return this.intime;

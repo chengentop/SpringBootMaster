@@ -74,4 +74,10 @@ public interface IUserService {
 	 */
 	public ResultData delete(String userid, AuthUser authuser) throws Exception;
 
+	/**
+	 * 获取用户的权限信息
+	 * @param authuser
+	 * @return
+	 */
+	public ResultData powerInfo( AuthUser authuser);
 }

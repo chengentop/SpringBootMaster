@@ -6,6 +6,7 @@ import com.master.core.framework.exception.DataAccessException;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Set;
 
 
 /**
@@ -34,4 +35,7 @@ public interface IPowerDao extends IBaseDao<Power> {
      */
     public List<Power> selectPower(String roleid) throws DataAccessException;
 
+    Set<String> getMenuCode(String roleid)throws DataAccessException;
+
+    Set<String> getPermissioncode(String roleid)throws DataAccessException;
 }

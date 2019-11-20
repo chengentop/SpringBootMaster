@@ -111,4 +111,14 @@
             rp.roleid=#{roleid} and state='1'
 	</select>
 
+
+    <select id="getPermissioncode" resultType="java.lang.String" parameterType="java.lang.String">
+            select  p.permissioncode from t_role_power rp left join t_power p on rp.powerid=p.powerid  where rp.roleid = #{roleid}
+	</select>
+
+
+    <select id="getMenuCode" resultType="java.lang.String" parameterType="java.lang.String">
+            select  p.menucode from t_role_power rp left join t_power p on rp.powerid=p.powerid  where rp.roleid = #{roleid}
+	</select>
+
 </mapper>
