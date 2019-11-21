@@ -83,12 +83,8 @@ public class WebConfig implements WebMvcConfigurer{
 		List<ViewResolver> viewResolvers = new LinkedList<>();
 
 		viewResolvers.add(new JsonViewResolver());
-//		InternalResourceViewResolver jspViewResolver = new InternalResourceViewResolver();
-//		jspViewResolver.setViewClass(JstlView.class);
-//		jspViewResolver.setPrefix("/WEB-INF/view/");
-//		jspViewResolver.setSuffix(".jsp");
-//		jspViewResolver.setOrder(2);
-//		viewResolvers.add(jspViewResolver);
+		InternalResourceViewResolver jspViewResolver = new InternalResourceViewResolver();
+		viewResolvers.add(jspViewResolver);
 
 		ContentNegotiatingViewResolver resolver = new ContentNegotiatingViewResolver();
 		resolver.setViewResolvers(viewResolvers);
