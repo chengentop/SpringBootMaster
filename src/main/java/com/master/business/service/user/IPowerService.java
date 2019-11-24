@@ -9,67 +9,77 @@ import java.util.List;
 
 
 /**
-  * 权限 服务接口
-  * @version v1.0.0
-  * @since jdk1.8+
-  * @author 123
-  */
+ * 权限 服务接口
+ *
+ * @author 123
+ * @version v1.0.0
+ * @since jdk1.8+
+ */
 public interface IPowerService {
-	
-	/**
-	 * 获取权限
-	 *
-	 * @param powerid 创建时间
-	 * @return ResultData
-	 * @throws Exception
-	 */
-	public ResultData get(String powerid, AuthUser authuser) throws Exception;
-	
-	/**
-	 * 查询权限
-	 *
-	 * @param power 权限对象
-	 * @return ResultData
-	 * @throws Exception
-	 */
-	public ResultData find(Power power, AuthUser authuser) throws Exception;
-	
-	/**
-	 * 分页查询权限
-	 *
-	 * @param power 权限对象
-	 * @return ResultData
-	 * @throws Exception
-	 */
-	public ResultData findPager(Power power,PagerBean page, AuthUser authuser) throws Exception;
-	
-	/**
-	 * 添加权限
-	 *
-	 * @param power 权限对象
-	 * @param authuser 操作用户
-	 * @return ResultData
-	 * @throws Exception
-	 */
-	public ResultData add(Power power, AuthUser authuser) throws Exception;
-	
-	/**
-	 * 更新权限
-	 *
-	 * @param power 权限对象
-	 * @param authuser 操作用户
-	 * @return ResultData
-	 * @throws Exception
-	 */
-	public ResultData update(Power power, AuthUser authuser) throws Exception;
-	
-	/**
-	 * 删除权限
-	 *
-	 * @param powerid 创建时间
-	 * @param authuser 操作用户
-	 * @return ResultData
-	 * @throws Exception
-	 */
-	public ResultData delete(String powerid, AuthUser authuser) throws Exception;
+
+    /**
+     * 获取权限
+     *
+     * @param powerid 创建时间
+     * @return ResultData
+     * @throws Exception
+     */
+    public ResultData get(String powerid, AuthUser authuser) throws Exception;
+
+    /**
+     * 查询权限
+     *
+     * @param power 权限对象
+     * @return ResultData
+     * @throws Exception
+     */
+    public ResultData find(Power power, AuthUser authuser) throws Exception;
+
+    /**
+     * 分页查询权限
+     *
+     * @param power 权限对象
+     * @return ResultData
+     * @throws Exception
+     */
+    public ResultData findPager(Power power, PagerBean page, AuthUser authuser) throws Exception;
+
+    /**
+     * 添加权限
+     *
+     * @param power    权限对象
+     * @param authuser 操作用户
+     * @return ResultData
+     * @throws Exception
+     */
+    public ResultData add(Power power, AuthUser authuser) throws Exception;
+
+    /**
+     * 更新权限
+     *
+     * @param power    权限对象
+     * @param authuser 操作用户
+     * @return ResultData
+     * @throws Exception
+     */
+    public ResultData update(Power power, AuthUser authuser) throws Exception;
+
+    /**
+     * 删除权限
+     *
+     * @param powerid  创建时间
+     * @param authuser 操作用户
+     * @return ResultData
+     * @throws Exception
+     */
+    public ResultData delete(String powerid, AuthUser authuser) throws Exception;
+
+    /**
+     * 查询所有权限
+     *
+     * @param authuser
+     * @return
+     * @throws Exception
+     */
+    public ResultData listAllPermission(AuthUser authuser) throws Exception;
 }

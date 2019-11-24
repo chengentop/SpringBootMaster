@@ -28,6 +28,7 @@
         </where>
     </select>
 
+
     <select id="findByPage" resultType="com.master.business.domain.model.user.Role" parameterType="QueryBean">
         select
         <include refid="column"/>
@@ -94,5 +95,43 @@
 		where
 			ur.userid=#{userid}
     </select>
+
+    <resultMap id="roleMap" type="com.master.business.domain.model.user.Role">
+        <id column="roleid" property="roleid"/>
+        <result column="rolename" property="rolename"/>
+        <collection property="users" ofType="com.master.business.domain.model.user.User">
+            <id column="userid" property="userid"/>
+            <result column="username" property="username"/>
+        </collection>
+        <collection property="menus" ofType="com.master.business.domain.model.user.Power">
+            <id column="menucode" property="menucode"/>
+            <result column="menuname" property="menuname"/>
+            <collection property="permissions" ofType="com.master.business.domain.model.user.Power">
+                <id column="powerid" property="powerid"/>
+                <result column="permissionname" property="permissionname"/>
+            </collection>
+        </collection>
+    </resultMap>
+
+
+    <select id="listRole" resultMap="roleMap">
+	      select
+            r.roleid          roleid,
+            r.rolename        rolename,
+            u.userid          userid,
+            u.username        username,
+            p.powerid         powerid,
+            p.menucode       menucode,
+            p.menuname       menuname,
+            p.permissionname permissionname
+        from  t_role r  left join t_user_role ur on ur.roleid= r.roleid left join t_user u on u.userid=ur.userid
+			left join t_role_power rp on r.roleid = rp.roleid left join t_power p on rp.powerid = p.powerid
+				order by ur.roleid, p.powerid
+    </select>
+
+    <delete id="removeRole" parameterType="java.lang.String">
+        delete from t_role
+        where roleid=#{roleid}
+    </delete>
 
 </mapper>

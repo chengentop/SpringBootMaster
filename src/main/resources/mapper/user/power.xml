@@ -121,4 +121,37 @@
             select  p.menucode from t_role_power rp left join t_power p on rp.powerid=p.powerid  where rp.roleid = #{roleid}
 	</select>
 
+
+
+    <resultMap id="permissionMap" type="com.master.business.domain.model.user.Power">
+        <id column="menuname" property="menuname"/>
+        <collection property="permissions" ofType="com.master.business.domain.model.user.Power">
+            <id column="powerid" property="powerid"/>
+            <result column="permissionName" property="permissionname"/>
+            <result column="requiredpermission" property="requiredpermission" />
+        </collection>
+    </resultMap>
+
+    <select id="listAllPermission" resultMap="permissionMap">
+          select
+            p.powerid            powerid,
+            p.menuname           menuname,
+            p.permissionname     permissionname,
+            p.requiredpermission requiredpermission
+        from t_power p;
+
+	</select>
+
+    <select id="getAllMenu" resultType="String">
+        SELECT p.menucode menucode
+        FROM t_power p
+        ORDER BY p.powerid
+    </select>
+
+    <select id="getAllPermission" resultType="String">
+        SELECT p.permissioncode permissioncode
+         FROM t_power p
+        ORDER BY p.powerid
+    </select>
+
 </mapper>

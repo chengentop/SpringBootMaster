@@ -5,7 +5,7 @@
 <!--t_role_power 映射文件 vision:1.0.0 -->
 <mapper namespace="com.master.business.domain.iface.user.IRolePowerDao">
 
-    <sql id="column"> id,modtime,poweridid,roleid,state,intime </sql>
+    <sql id="column"> poweridid,roleid,modtime,state,intime </sql>
 
     <sql id="key_where"> where id=#{id} </sql>
 
@@ -23,7 +23,6 @@
         <include refid="column"/>
         from t_role_power
         <where>
-            <if test="id != null &amp;&amp; id != ''">and id=#{id}</if>
             <if test="intime != null">and intime=#{intime}</if>
             <if test="modtime != null">and modtime=#{modtime}</if>
             <if test="powerid != null &amp;&amp; powerid != ''">and powerid=#{powerid}</if>
@@ -32,12 +31,12 @@
         </where>
     </select>
 
+
     <select id="findByPage" resultType="com.master.business.domain.model.user.RolePower" parameterType="QueryBean">
         select
         <include refid="column"/>
         from t_role_power
         <where>
-            <if test="param.id != null &amp;&amp; param.id != ''">and id=#{param.id}</if>
             <if test="param.intime != null">and intime=#{param.intime}</if>
             <if test="param.modtime != null">and modtime=#{param.modtime}</if>
             <if test="param.powerid != null &amp;&amp; param.powerid != ''">and powerid=#{param.powerid}</if>
@@ -52,7 +51,6 @@
     <insert id="insert" parameterType="com.master.business.domain.model.user.RolePower">
         insert into t_role_power (
         <trim suffixOverrides=",">
-            <if test="id != null &amp;&amp; id != ''">id,</if>
             <if test="intime != null">intime,</if>
             <if test="modtime != null">modtime,</if>
             <if test="powerid != null &amp;&amp; powerid != ''">powerid,</if>
@@ -61,7 +59,6 @@
         </trim>
         ) values (
         <trim suffixOverrides=",">
-            <if test="id != null &amp;&amp; id != ''">#{id},</if>
             <if test="intime != null">#{intime},</if>
             <if test="modtime != null">#{modtime},</if>
             <if test="powerid != null &amp;&amp; powerid != ''">#{powerid},</if>
@@ -75,7 +72,6 @@
     <update id="update" parameterType="com.master.business.domain.model.user.RolePower">
         update t_role_power
         <trim prefix=" set " suffixOverrides=",">
-            <if test="id != null &amp;&amp; id != ''">id=#{id},</if>
             <if test="intime != null">intime=#{intime},</if>
             <if test="modtime != null">modtime=#{modtime},</if>
             <if test="powerid != null &amp;&amp; powerid != ''">powerid=#{powerid},</if>
@@ -93,5 +89,17 @@
 
     <!-- 自定义操作 -->
 
+    <insert id="insertRolePermission">
+        insert into t_role_power (roleid, powerid)
+        values
+        <foreach collection="list" item="item" index="index" separator=",">
+            (#{roleid}, #{item})
+        </foreach>
+    </insert>
+
+    <delete id="removeRoleAllPermission"  parameterType="java.lang.String">
+        delete from t_role_power
+       where  roleid= #{roleid}
+    </delete>
 
 </mapper>

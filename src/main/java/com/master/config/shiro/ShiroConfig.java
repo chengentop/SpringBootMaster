@@ -9,9 +9,6 @@ import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
 import org.apache.shiro.mgt.SecurityManager;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
 import org.apache.shiro.web.session.mgt.DefaultWebSessionManager;
-import org.crazycake.shiro.RedisCacheManager;
-import org.crazycake.shiro.RedisManager;
-import org.crazycake.shiro.RedisSessionDAO;
 import org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.beans.factory.config.MethodInvokingFactoryBean;
@@ -25,17 +22,6 @@ import java.util.Map;
 
 @Configuration
 public class ShiroConfig {
-
-    @Value("${spring.redis.host}")
-    private String redisHost;
-
-    @Value("${spring.redis.port}")
-    private int redisPort;
-
-//    @Value("${spring.redis.password}")
-//    private String redisPassword;
-//
-
 
     public ShiroConfig() {
         System.out.println("ShiroConfig  init ....");
@@ -116,10 +102,7 @@ public class ShiroConfig {
     public DefaultWebSecurityManager securityManager() {
         DefaultWebSecurityManager securityManager = new DefaultWebSecurityManager();
         securityManager.setRealm(shiroRealm());
-//        //配置 redis缓存管理器 参考博客：
         securityManager.setCacheManager(cacheManager());
-        // 自定义session管理 使用redis
-        securityManager.setSessionManager(sessionManager());
         return securityManager;
     }
 
@@ -143,64 +126,17 @@ public class ShiroConfig {
         return advisorAutoProxyCreator;
     }
 
-//    /**
-//     * shiro缓存管理器
-//     * 需要添加到securityManager中
-//     */
-//    @Bean
-//    public EhCacheManager getEhCacheManager() {
-//        EhCacheManager cacheManager = new EhCacheManager();
-//        cacheManager.setCacheManagerConfigFile("classpath:config/ehcache-shiro.xml");
-//        return cacheManager;
-//    }
     /**
-     * cacheManager 缓存 redis实现
-     * 使用的是shiro-redis开源插件
-     */
-    public RedisCacheManager cacheManager() {
-        RedisCacheManager redisCacheManager = new RedisCacheManager();
-        redisCacheManager.setRedisManager(redisManager());
-        return redisCacheManager;
-    }
-    /**
-     * 配置shiro redisManager
-     * 使用的是shiro-redis开源插件
-     */
-    public RedisManager redisManager() {
-        RedisManager redisManager = new RedisManager();
-        redisManager.setHost("127.0.0.1");
-        redisManager.setPort(6379);
-        redisManager.setTimeout(30000);//连接redis超时
-        redisManager.setExpire(1800);// 配置缓存过期时间 30分钟
-        return redisManager;
-    }
-    /**
-     * Session Manager
-     * 使用的是shiro-redis开源插件
-     */
-
-    @Bean
-    public DefaultWebSessionManager sessionManager() {
-        DefaultWebSessionManager sessionManager = new DefaultWebSessionManager();
-        sessionManager.setSessionDAO(redisSessionDAO());
-        sessionManager.setGlobalSessionTimeout(1800);
-        sessionManager.setSessionValidationInterval(900);
-        // 定时清理失效会话, 清理用户直接关闭浏览器造成的孤立会话
-        sessionManager.setSessionValidationInterval(900);
-        sessionManager.setDeleteInvalidSessions(true);
-        return sessionManager;
-    }
-
-    /**
-     * RedisSessionDAO shiro sessionDao层的实现 通过redis
-     * 使用的是shiro-redis开源插件
+     * shiro缓存管理器
+     * 需要添加到securityManager中
      */
     @Bean
-    public RedisSessionDAO redisSessionDAO() {
-        RedisSessionDAO redisSessionDAO = new RedisSessionDAO();
-        redisSessionDAO.setRedisManager(redisManager());
-        return redisSessionDAO;
+    public EhCacheManager cacheManager() {
+        EhCacheManager cacheManager = new EhCacheManager();
+        cacheManager.setCacheManagerConfigFile("classpath:ehcache-shiro.xml");
+        return cacheManager;
     }
+
 
 
 }

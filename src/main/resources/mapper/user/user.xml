@@ -18,7 +18,6 @@
 		select <include refid="column"/> from t_user 
 		<where>
 			<if test="fullname != null &amp;&amp; fullname != ''"> and fullname=#{fullname}</if>
-			<if test="password != null &amp;&amp; password != ''"> and password=#{password}</if>
 			<if test="salt != null &amp;&amp; salt != ''"> and salt=#{salt}</if>
 			<if test="userid != null &amp;&amp; userid != ''"> and userid=#{userid}</if>
 			<if test="username != null &amp;&amp; username != ''"> and username=#{username}</if>
@@ -29,7 +28,6 @@
 		select <include refid="column"/> from t_user
 		<where>
 			<if test="param.fullname != null &amp;&amp; param.fullname != ''"> and fullname=#{param.fullname}</if>
-			<if test="param.password != null &amp;&amp; param.password != ''"> and password=#{param.password}</if>
 			<if test="param.salt != null &amp;&amp; param.salt != ''"> and salt=#{param.salt}</if>
 			<if test="param.userid != null &amp;&amp; param.userid != ''"> and userid=#{param.userid}</if>
 			<if test="param.username != null &amp;&amp; param.username != ''"> and username=#{param.username}</if>

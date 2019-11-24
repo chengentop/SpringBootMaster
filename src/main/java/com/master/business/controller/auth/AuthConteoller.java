@@ -65,7 +65,6 @@ public class AuthConteoller extends BaseController {
         ResultData data = ResultData.init();
         try {
             session.removeAttribute("authuser");
-            session.invalidate();
             collect(data, model);
         } catch (Exception e) {
             collect(e, model);

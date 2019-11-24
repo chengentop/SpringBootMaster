@@ -70,4 +70,36 @@ public interface IRoleService {
 	 * @throws Exception
 	 */
 	public ResultData delete(String roleid, AuthUser authuser) throws Exception;
+
+	/**
+	 * 角色列表
+	 * @param authuser
+	 * @return
+	 * @throws Exception
+	 */
+	public  ResultData listRole(AuthUser authuser)throws Exception;;
+
+	/**
+	 * 添加角色与对应权限
+	 * @param role
+	 * @param authuser
+	 * @return
+	 */
+	public ResultData addRole(Role role, AuthUser authuser)throws Exception;;
+
+	/**
+	 * 删除角色与对应权限
+	 * @param roleid
+	 * @param authuser
+	 * @return
+	 */
+	public ResultData removeRole(String roleid, AuthUser authuser)throws Exception;;
+
+	/**
+	 * 更新角色与对应权限
+	 * @param role
+	 * @param authuser
+	 * @return
+	 */
+	public ResultData updateRole(Role role, AuthUser authuser)throws Exception;
 }

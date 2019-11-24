@@ -35,7 +35,13 @@ public interface IPowerDao extends IBaseDao<Power> {
      */
     public List<Power> selectPower(String roleid) throws DataAccessException;
 
-    Set<String> getMenuCode(String roleid)throws DataAccessException;
+    public Set<String> getMenuCode(String roleid)throws DataAccessException;
 
-    Set<String> getPermissioncode(String roleid)throws DataAccessException;
+    public Set<String> getPermissioncode(String roleid)throws DataAccessException;
+
+    public List<Power> listAllPermission()throws DataAccessException;
+
+    public Set<String> getAllMenu()throws DataAccessException;
+
+    public Set<String> getAllPermission()throws DataAccessException;
 }

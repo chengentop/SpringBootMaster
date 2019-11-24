@@ -13,19 +13,12 @@ public class RolePower implements Serializable{
 	private static final long serialVersionUID = 1L;    
 	public static final String ID="id";  //
 	
-	private String id;  //
-	private Timestamp intime;  //创建时间
-	private Timestamp modtime;  //修改时间
+
 	private String powerid;  //权限id
 	private String roleid;  //角色id
 	private Integer state;  //状态:1. 有效 2. 无效
-	
-	public String getId(){
-		return this.id;
-	}
-	public void setId(String id){
-		this.id = id;
-	}
+	private Timestamp intime;  //创建时间
+	private Timestamp modtime;  //修改时间
 	public Timestamp getIntime(){
 		return this.intime;
 	}
@@ -60,7 +53,6 @@ public class RolePower implements Serializable{
 	@Override
 	public String toString() {
 		StringBuffer sb = new StringBuffer("com.master: ");
-		if(null != id)sb.append("id=").append(id).append(",");
 		if(null != intime)sb.append("intime=").append(intime).append(",");
 		if(null != modtime)sb.append("modtime=").append(modtime).append(",");
 		if(null != powerid)sb.append("powerid=").append(powerid).append(",");

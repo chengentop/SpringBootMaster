@@ -28,4 +28,18 @@ public interface IRolePowerDao extends IBaseDao<RolePower> {
      */
     public RolePower get(String id) throws DataAccessException;
 
+    /**
+     * 批量插入
+     * @param roleid
+     * @param list
+     * @return
+     */
+    public int insertRolePermission(String roleid, List<String> list) throws DataAccessException;
+
+    /**
+     * 删除
+     * @param roleid
+     * @return
+     */
+    public int removeRoleAllPermission(String roleid) throws DataAccessException;
 }

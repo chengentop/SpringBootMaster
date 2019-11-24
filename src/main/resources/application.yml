@@ -1,6 +1,6 @@
 spring:
   session:
-    timeout: 60
+    timeout: 1800
 
   mail:
     host: smtp.163.com

@@ -6,7 +6,11 @@ import com.master.business.domain.iface.user.IUserDao;
 import com.master.business.domain.model.user.Power;
 import com.master.business.domain.model.user.Role;
 import com.master.business.domain.model.user.User;
+import com.master.business.service.user.IPowerService;
 import com.master.business.service.user.IUserService;
+import com.master.core.framework.web.AuthUser;
+import com.master.core.framework.web.ResultData;
+import com.master.core.util.model.UserInfo;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
@@ -24,6 +28,8 @@ public class ShiroRealm extends AuthorizingRealm {
     private IRoleDao roleDao;
     @Autowired
     private IPowerDao powerDao;
+    @Autowired
+    private IUserService userService;
 
 
     /**
@@ -86,14 +92,21 @@ public class ShiroRealm extends AuthorizingRealm {
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
         SimpleAuthorizationInfo authorizationInfo = new SimpleAuthorizationInfo();
         User user = (User) principals.getPrimaryPrincipal();
-        List<Role> roles = roleDao.selectRole(user.getUserid());
-        roles.forEach(role -> {
-            authorizationInfo.addRole(role.getRolename());
-            List<Power> list = powerDao.selectPower(role.getRoleid());
-            list.forEach(power -> {
-                authorizationInfo.addStringPermission(power.getPermissioncode());
+
+        AuthUser authUser = new AuthUser();
+        authUser.setUserid(user.getUserid());
+        try {
+            ResultData data = userService.powerInfo(authUser);
+            UserInfo userInfo = (UserInfo) data.getData().get("userPermission");
+            userInfo.getMenuList().forEach(role->{
+                authorizationInfo.addRole(role);
+                userInfo.getPermissionList().forEach(power->{;
+                    authorizationInfo.addStringPermission(power);
+                });
             });
-        });
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         return authorizationInfo;
     }
 
