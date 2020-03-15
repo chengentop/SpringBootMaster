@@ -1,6 +1,7 @@
 package com.master.config.shiro;
 
 import com.master.core.shiro.ShiroRealm;
+import com.master.core.shiro.filter.ShiroLoginFilter;
 import org.apache.commons.lang.StringUtils;
 import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
 import org.apache.shiro.cache.ehcache.EhCacheManager;
@@ -17,6 +18,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 
+import javax.servlet.Filter;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -45,6 +47,9 @@ public class ShiroConfig {
         //<!-- 过滤链定义，从上向下顺序执行，一般将/**放在最为下边 -->:这是一个坑呢，一不小心代码就不好使了;
         //<!-- authc:所有url都必须认证通过才可以访问; anon:所有url都都可以匿名访问-->
         filterChainDefinitionMap.put("/**", "authc");
+        //用户未登录不进行跳转，而是自定义返回json数据
+        Map<String, Filter> filters = shiroFilterFactoryBean.getFilters();//获取filters
+        filters.put("authc", new ShiroLoginFilter());//将自定义 的FormAuthenticationFilter注入shiroFilter中
         // 如果不设置默认会自动寻找Web工程根目录下的"/login.jsp"页面
         //未授权界面;
         shiroFilterFactoryBean.setUnauthorizedUrl("/403");

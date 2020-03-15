@@ -126,7 +126,7 @@
             p.permissionname permissionname
         from  t_role r  left join t_user_role ur on ur.roleid= r.roleid left join t_user u on u.userid=ur.userid
 			left join t_role_power rp on r.roleid = rp.roleid left join t_power p on rp.powerid = p.powerid
-				order by ur.roleid, p.powerid
+				order by r.intime asc
     </select>
 
     <delete id="removeRole" parameterType="java.lang.String">
